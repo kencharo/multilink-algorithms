@@ -140,5 +140,4 @@ if __name__ == "__main__":
         return line,
 
     ani = animation.FuncAnimation(fig, update_draw, arange(tstep), interval=5)
-    #ani.save('animation.gif', writer='imagemagick', fps=4)
     plt.show()
