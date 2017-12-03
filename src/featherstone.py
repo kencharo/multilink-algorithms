@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 nlink = 10 # Number of links
-mass    = 0.5 * numpy.ones(nlink+1)
-llen    = 1.0 * numpy.ones(nlink+1) # length of links
-lgc     = llen/2.0  # center of mass
-jtype   = numpy.zeros(nlink)  # types of joints
-lmd     = numpy.array([i for i in range(-1, nlink-1)])
+mass = 0.5 * numpy.ones(nlink+1)
+llen = 1.0 * numpy.ones(nlink+1) # length of links
+lgc = llen/2.0  # center of mass
+jtype = numpy.zeros(nlink)  # types of joints
+lmd = numpy.array([i for i in range(-1, nlink-1)])
 inertia = [numpy.mat(zeros((6, 6))) for i in range(nlink+1)]
 for i in range(nlink+1):
     inertia[i][1,1] =(mass[i] * llen[i]**2)/12.0
@@ -20,11 +20,11 @@ for i in range(nlink+1):
     inertia[i][0:3,0:3] = inertia[i][0:3,0:3] + htmp*htmp.T
     inertia[i][0:3,3:6] = mass[i] * htmp
     inertia[i][3:6,0:3] = mass[i] * htmp.T
-GRAVITY = 9.8
 
-delta_t  = 0.002
-tstep    = 5000
-eps      = 1e-5
+GRAVITY = 9.8
+delta_t = 0.002
+tstep = 5000
+eps = 1e-5
 
 # Joint Types
 #0:Revolute Joint
@@ -35,14 +35,14 @@ def jcalc(jtype, q, qdot, p):
         S = numpy.mat([[0.0],[0.0],[1.0],[0.0],[0.0],[0.0]])
         vj = S * qdot
         cj = numpy.mat(numpy.zeros((6, 1)))
-        Xj = spRot(makeRot(2, q).T)
+        Xj = sp_rot(make_rot(2, q).T)
     return S, Xj, vj, cj
 
-def ArticulatedBodyAlgorithm(nlink, q, qdot,
-                             tau, fx, p,
-                             inertia, lmd,
-                             jtype, Xt,
-                             a0 = numpy.mat([[0.0], [0.0], [0.0], [0.0], [GRAVITY], [0.0]])):
+def articulated_body_algorithm(nlink, q, qdot,
+                               tau, fx, p,
+                               inertia, lmd,
+                               jtype, Xt,
+                               a0 = numpy.mat([[0.0], [0.0], [0.0], [0.0], [GRAVITY], [0.0]])):
     """
     Articulated-Body Algorithm
     """
@@ -69,9 +69,9 @@ def ArticulatedBodyAlgorithm(nlink, q, qdot,
             i_X_li[i] = Xj * Xt[i]
             i_X_o[i] = i_X_li[i]
             vi[i] = vj
-        ci[i] = cj + spCross(vi[i], vj)
+        ci[i] = cj + sp_cross(vi[i], vj)
         IAi[i] = inertia[i]
-        pAi[i] = spDualCross(vi[i], inertia[i] * vi[i]) - spDual(i_X_o[i]) * fx[i]
+        pAi[i] = sp_dual_cross(vi[i], inertia[i] * vi[i]) - sp_dual(i_X_o[i]) * fx[i]
     # Phase2
     for i in range(nlink-1, -1, -1):
         U[i] = IAi[i] * S[i]
@@ -80,8 +80,8 @@ def ArticulatedBodyAlgorithm(nlink, q, qdot,
         if lmd[i] != -1:
             Ia = IAi[i] - U[i] * D[i].I * U[i].T
             pa = pAi[i] + Ia * ci[i] + U[i] * D[i].I * u[i]
-            IAi[lmd[i]] = IAi[lmd[i]] + spDualInv(i_X_li[i]) * Ia * i_X_li[i]
-            pAi[lmd[i]] = pAi[lmd[i]] + spDualInv(i_X_li[i]) * pa
+            IAi[lmd[i]] = IAi[lmd[i]] + sp_dual_inv(i_X_li[i]) * Ia * i_X_li[i]
+            pAi[lmd[i]] = pAi[lmd[i]] + sp_dual_inv(i_X_li[i]) * pa
     # Phase3
     for i in range(nlink):
         if lmd[i] != -1:
@@ -112,12 +112,12 @@ if __name__ == "__main__":
     fx = [numpy.mat(numpy.zeros((6, 1))) for i in range(nlink)]
     tau = [numpy.mat(numpy.zeros((6, 1))) for i in range(nlink)]
     p = [numpy.mat(numpy.zeros((3, 1)))] + [numpy.mat([[llen[i]],[0.0],[0.0]]) for i in range(1, nlink+1)]
-    Xt = [numpy.mat(E6)] + [spXlt(p[i]) for i in range(1, nlink+1)]
+    Xt = [numpy.mat(E6)] + [sp_xlt(p[i]) for i in range(1, nlink+1)]
     i_X_o  = [numpy.mat(E6) for i in range(nlink)]
     pos = fwdkinematics(p, i_X_o)
 
     def calc_state(q, qdot):
-        q2dot, i_X_o = ArticulatedBodyAlgorithm(nlink, q, qdot, tau, fx, p, inertia, lmd, jtype, Xt);
+        q2dot, i_X_o = articulated_body_algorithm(nlink, q, qdot, tau, fx, p, inertia, lmd, jtype, Xt);
         qdot = qdot + delta_t * q2dot
         q = q + delta_t * qdot
         return q, qdot, i_X_o

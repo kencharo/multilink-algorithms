@@ -42,40 +42,40 @@ def mcross(v1, v2):
     ans[2, 0] = v1[0, 0] * v2[1, 0] - v1[1, 0] * v2[0, 0]
     return ans
 
-def spInv(X):
+def sp_inv(X):
     """
     inverse spatial matrix
     """
     return matrix(bmat[[X[0:3, 0:3].T, X[0:3, 3:6].T],
                        [X[3:6, 0:3].T, X[3:6, 3:6].T]])
 
-def spDual(X):
+def sp_dual(X):
     return matrix(bmat([[X[0:3, 0:3], X[3:6, 0:3]],
                         [X[0:3, 3:6], X[3:6, 3:6]]]))
 
-def spDualInv(X):
+def sp_dual_inv(X):
     """
     Conjugate inverse of spatial matrix
     """
     return matrix(bmat([[X[0:3, 0:3].T, X[3:6, 0:3].T],
                         [X[0:3, 3:6].T, X[3:6, 3:6].T]]))
 
-def spCross(spv1, spv2):
+def sp_cross(spv1, spv2):
     """
     Outer product for spatial vectors
     """
     return r_[mcross(spv1[0:3, 0], spv2[0:3, 0]),
               mcross(spv1[0:3, 0], spv2[3:6, 0]) + mcross(spv1[3:6, 0], spv2[0:3, 0])]
 
-def spDualCross(spv1, spv2):
+def sp_dual_cross(spv1, spv2):
     return r_[mcross(spv1[0:3, 0], spv2[0:3, 0]) + mcross(spv1[0:3, 0], spv2[0:3, 0]),
               mcross(spv1[0:3, 0], spv2[3:6, 0])]
 
-def rodriguesEq(a, th):
+def rodrigues_eq(a, th):
     ahat = hat(a)
     return E + ahat*sin(th) + ahat*ahat*(1-cos(th))
 
-def makeRot(axis, th):
+def make_rot(axis, th):
     rot = matrix(zeros((3,3)))
     cth = cos(th)
     sth = sin(th)
@@ -99,17 +99,13 @@ def makeRot(axis, th):
         rot[2, 2] = 1.0
     return rot
 
-def spRot(rot):
+def sp_rot(rot):
     ans = matrix(zeros((6, 6)))
     ans[0:3, 0:3] = rot
     ans[3:6, 3:6] = rot
     return ans
 
-def spXlt(p):
+def sp_xlt(p):
     ans = matrix(E6)
     ans[3:6, 0:3] = -hat(p)
-    return ans
-
-def makeX(rot, p):
-    ans = spRot(rot) * spXlt(p)
     return ans
