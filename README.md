@@ -1,4 +1,4 @@
-# Featherstone Algorithm
+# multilink gym
 
 Simple N articulated links simulation.
 
