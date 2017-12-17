@@ -1,0 +1,1 @@
+Search.setIndex({objects:{},terms:{index:1,search:1,matrixfunc:[1,2],welcom:1,modul:[0,1,2],indic:1,content:1,tabl:1,document:1,page:1,featherston:[0,1]},objtypes:{},titles:["featherstone Module","Welcome to .&#8217;s documentation!","matrixfunc Module"],objnames:{},filenames:["featherstone","index","matrixfunc"]})
