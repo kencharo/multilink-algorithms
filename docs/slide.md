@@ -130,15 +130,6 @@ $$
 
 ---
 
-## 剛体力学の基礎
-* 剛体の運動方程式は以下の2式で表される
-$$
-\begin{equation}
-\begin{aligned}
-\boldsymbol{f} &= m\boldsymbol{a_C} \\\\
-\boldsymbol{n_C} &= \boldsymbol{I}\boldsymbol{\dot{\omega}}+\boldsymbol{\omega}\times \boldsymbol{I}\boldsymbol{\omega}
-\end{aligned}
-\end{equation}
-$$
-* 上の式が重心の並進運動の式で下の式が重心まわりの回転運動の式を表している．
+## Plucker Coordinates
 
+---
