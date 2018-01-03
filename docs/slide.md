@@ -68,10 +68,64 @@ $$
 \end{equation}
 $$
 
-* 双対基底によるベクトル表現を用いて内積を表現すると
+* 双対基底によるベクトル表現を用いて内積を表現する
 
 $$
 \boldsymbol{m} \cdot \boldsymbol{f} = \underline{m}^T \underline{f}
+$$
+
+---
+
+## 速度ベクトル
+
+![velocity](images/velocity.png)
+
+---
+
+## Spatial Velocity
+
+
+* 剛体上のとある点Pにおける並進速度$\boldsymbol{v}_P$は以下のように表せる
+$$
+\boldsymbol{v}_P = \boldsymbol{v}_O + \boldsymbol{\omega} \times \overrightarrow{OP}
+$$
+  * $\boldsymbol{v}_O$は原点Oでの剛体の並進速度
+  * $\boldsymbol{\omega}$は剛体の角速度
+* Spatial Velocity
+$$
+\hat{\boldsymbol{v}}_O = \left[
+\begin{array}{c}
+\boldsymbol{\omega} \\\\
+\boldsymbol{v}_O
+\end{array}
+\right]
+$$
+
+---
+
+## 力ベクトル
+
+![force](images/force.png)
+
+---
+
+## Spatial Force
+
+
+* 剛体上のとある点Pまわりにおけるトルク$\boldsymbol{n}_P$は以下のように表せる
+$$
+\boldsymbol{n}_P = \boldsymbol{n}_O + \boldsymbol{f} \times \overrightarrow{OP}
+$$
+  * $\boldsymbol{n}_O$は原点Oまわりでの剛体のトルク
+  * $\boldsymbol{f}$は剛体にかかる並進力
+* Spatial Velocity
+$$
+\hat{\boldsymbol{f}}_O = \left[
+\begin{array}{c}
+\boldsymbol{n}_O \\\\
+\boldsymbol{f}
+\end{array}
+\right]
 $$
 
 ---
