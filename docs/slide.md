@@ -132,4 +132,27 @@ $$
 
 ## Plucker Coordinates
 
+* 直交座標系において12の基底ベクトルを定義する
+
+![m-coord](images/plucker_motion.png)
+![f-coord](images/plucker_force.png)
+
+$$
+\\boldsymbol{d}\_{O\_x},
+\\boldsymbol{d}\_{O\_y},
+\\boldsymbol{d}\_{O\_z},
+\\boldsymbol{d}\_x,
+\\boldsymbol{d}\_y,
+\\boldsymbol{d}\_z
+$$
+
+$$
+\\boldsymbol{e}\_x,
+\\boldsymbol{e}\_y,
+\\boldsymbol{e}\_z,
+\\boldsymbol{e}\_{O\_x},
+\\boldsymbol{e}\_{O\_y},
+\\boldsymbol{e}\_{O\_z}
+$$
+
 ---
