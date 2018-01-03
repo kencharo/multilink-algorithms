@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/league.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,31 +24,14 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section data-markdown>
-				  <script type="text/template">
-Spatial Vector Algebraについて
-* Rigid Body Dynamics Algorithmsとは
-* Roy Featherstoneさんによって書かれた剛体力学の本
-  * ロボットのような多リンクの剛体の順動力学・逆動力学アルゴリズムの本
-  * 剛体の運動をSpatial Vectorという6次元のベクトルで表現することで上記アルゴリズムを効率的に解く方法を提案
-  * Bullet, Dartなどの有名な物理エンジンが採用している剛体力学計算手法
-				  </script>
-				</section>
-				<section data-markdown>
-				  <script type="text/template">
-剛体力学の基礎
-* 剛体の運動方程式は以下の2式で表される
-$$
-\begin{equation}
-\begin{aligned}
-\boldsymbol{f} &= m\boldsymbol{a_C} \\\\
-\boldsymbol{n_C} &= \boldsymbol{I}\boldsymbol{\dot{\omega}}+\boldsymbol{\omega}\times \boldsymbol{I}\boldsymbol{\omega}
-\end{aligned}
-\end{equation}
-$$
-* 上の式が重心の並進運動の式で下の式が重心まわりの回転運動の式を表している．
-				  </script>
-				</section>
+			  <section data-markdown="slide.md"
+				   data-separator="^\n---\n$"
+				   data-separator-vertical="^\n>>>\n$"
+			           data-notes="^Note:"
+                                   data-charset="utf-8">
+			    <script type="text/template">
+			    </script>
+			  </section>
 			</div>
 		</div>
 
