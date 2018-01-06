@@ -258,13 +258,13 @@ $$
 $$
 
 $$
-\hat{\boldsymbol{v}}_O \times \hat{\boldsymbol{f}}_O =\left[
+\hat{\boldsymbol{v}}_O \times ^\* \hat{\boldsymbol{f}}_O =\left[
 \begin{array}{c}
 \boldsymbol{\omega} \\\\
 \boldsymbol{v}_O
 \end{array}
 \right]
-\times
+\times ^*
 \left[
 \begin{array}{c}
 \boldsymbol{\tau}_O \\\\
@@ -297,3 +297,58 @@ $$
 $$
 
 ---
+
+## 微分
+
+* 動いている座標上の微分
+
+$$
+\Bigl[ \frac{d}{dt} \boldsymbol{s} \Bigr]_O = \frac{d}{dt} \boldsymbol{s}_O + \boldsymbol{v}_O \times \boldsymbol{s}_O
+$$
+
+---
+
+## 加速度
+
+$$
+\hat{\boldsymbol{a}}_O=
+\left[
+\begin{array}{c}
+\dot{\boldsymbol{\omega}} \\\\
+\ddot{\boldsymbol{r}}-\boldsymbol{\omega} \times \dot{\boldsymbol{r}}
+\end{array}
+\right]
+$$
+
+---
+
+## 剛体の慣性
+
+![inertia](images/inertia.png)
+
+* Spatial inertia tensor
+
+$$
+\hat{\boldsymbol{I}}_O=
+\left[
+\begin{array}{cc}
+\overline{\boldsymbol{I}}_C+m \boldsymbol{c} \times \boldsymbol{c} \times ^T & m \boldsymbol{c} \times \\\\
+m \boldsymbol{c} \times ^T & m \boldsymbol{1}
+\end{array}
+\right]
+$$
+
+---
+
+## 運動方程式
+
+$$
+\boldsymbol{f} = \frac{d}{dt} \( \boldsymbol{Iv} \) =
+\boldsymbol{Ia} + \boldsymbol{v} \times \boldsymbol{Iv}
+$$
+
+---
+
+## 拘束あり運動
+
+![constraint](images/constraint.png)
