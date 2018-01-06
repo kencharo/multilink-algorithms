@@ -118,7 +118,7 @@ $$
 $$
   * $\boldsymbol{n}_O$は原点Oまわりでの剛体のトルク
   * $\boldsymbol{f}$は剛体にかかる並進力
-* Spatial Velocity
+* Spatial Force
 $$
 \hat{\boldsymbol{f}}_O = \left[
 \begin{array}{c}
@@ -153,6 +153,147 @@ $$
 \\boldsymbol{e}\_{O\_x},
 \\boldsymbol{e}\_{O\_y},
 \\boldsymbol{e}\_{O\_z}
+$$
+
+---
+
+## 座標変換
+
+![transform](images/transforms.png)
+
+* Motion vectorのA座標からB座標への変換
+
+$$
+\begin{eqnarray}
+^{B} X_A =\left[
+\begin{array}{cc}
+\boldsymbol{E} & \boldsymbol{0} \\\\
+\boldsymbol{0} & \boldsymbol{E}
+\end{array}
+\right]
+\left[
+\begin{array}{cc}
+\boldsymbol{1} & \boldsymbol{0} \\\\
+-\boldsymbol{r} \times & \boldsymbol{1}
+\end{array}
+\right]
+\end{eqnarray}
+$$
+
+---
+
+## 座標変換
+
+* ここで$\boldsymbol{r} \times$は
+
+$$
+\begin{eqnarray}
+\boldsymbol{r} \times =\left[
+\begin{array}{ccc}
+0 & -r_z & r_y \\\\
+r_z & 0 & -r_x \\\\
+-r_y & r_x & 0
+\end{array}
+\right]
+\end{eqnarray}
+$$
+
+* Force vectorの変換行列は$\( ^B \boldsymbol{X}_A \)^{-T}$
+
+---
+
+## Spatial Vector基本演算
+
+* 物体Aの速度を$\boldsymbol{v}\_A$，物体Bの速度を$\boldsymbol{v}\_B$，Aから見たBの相対速度を$\boldsymbol{v}\_{BA}$とすると
+
+$$
+\boldsymbol{v}\_B = \boldsymbol{v}\_A + \boldsymbol{v}\_{BA}
+$$
+
+* 速度変数$\dot{q}$と関節軸ベクトル$\boldsymbol{s}$を用いると，関節角速度$\boldsymbol{v}_J$は
+
+$$
+\boldsymbol{v}_J = \boldsymbol{s} \dot{q}
+$$
+
+---
+
+## Spatial Vector基本演算
+
+* 同じ物体に力$\boldsymbol{f}_1$，$\boldsymbol{f}_2$がかかっている際に物体にかかる力のトータルは以下で表される
+
+$$
+\boldsymbol{f}_{tot} = \boldsymbol{f}_1 + \boldsymbol{f}_2
+$$
+
+* 物体Aが物体Bに対して力$\boldsymbol{f}$を作用させている場合，物体Aは物体Bから$-\boldsymbol{f}$の反力を受ける(作用反作用)
+
+---
+
+## 外積計算
+
+* $\hat{\boldsymbol{v}}_O$，$\hat{\boldsymbol{m}}_O$をMotion Vector，$\hat{\boldsymbol{f}}_O$をForce Vectorとすると
+
+$$
+\hat{\boldsymbol{v}}_O \times \hat{\boldsymbol{m}}_O =\left[
+\begin{array}{c}
+\boldsymbol{\omega} \\\\
+\boldsymbol{v}_O
+\end{array}
+\right]
+\times
+\left[
+\begin{array}{c}
+\boldsymbol{m} \\\\
+\boldsymbol{m}_O
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\boldsymbol{\omega} \times \boldsymbol{m} \\\\
+\boldsymbol{\omega} \times \boldsymbol{m}_O + \boldsymbol{v}_O \times \boldsymbol{m}
+\end{array}
+\right]
+$$
+
+$$
+\hat{\boldsymbol{v}}_O \times \hat{\boldsymbol{f}}_O =\left[
+\begin{array}{c}
+\boldsymbol{\omega} \\\\
+\boldsymbol{v}_O
+\end{array}
+\right]
+\times
+\left[
+\begin{array}{c}
+\boldsymbol{\tau}_O \\\\
+\boldsymbol{f}
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\boldsymbol{\omega} \times \boldsymbol{\tau}_O + \boldsymbol{v}_O \times \boldsymbol{f} \\\\
+\boldsymbol{\omega} \times \boldsymbol{f}
+\end{array}
+\right]
+$$
+
+---
+
+## 微分
+
+* Spatial Vectorの微分
+
+$$
+\frac{d}{dt} \boldsymbol{s} = \lim_{\delta \rightarrow 0} \frac{\boldsymbol{s}\( t+\delta t \) - \boldsymbol{s}\( t \)}{\delta t}
+$$
+
+* 速度$\boldsymbol{v}$で動いている物体上にある固定点のSpatial Vector$\boldsymbol{s}$の微分
+
+$$
+\frac{d}{dt} \boldsymbol{s} = \boldsymbol{v} \times \boldsymbol{s}
 $$
 
 ---
