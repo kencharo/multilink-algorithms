@@ -89,7 +89,6 @@ if __name__ == "__main__":
     import matplotlib.animation as animation
 
     delta_t = 0.002
-    tstep = 5000
 
     nlink = 10 # Number of links
     mass = 0.5 * np.ones(nlink+1)
@@ -141,5 +140,5 @@ if __name__ == "__main__":
         fig.canvas.draw()                 # redraw the canvas
         return line,
 
-    ani = animation.FuncAnimation(fig, update_draw, arange(tstep), interval=5)
+    ani = animation.FuncAnimation(fig, update_draw, interval=5)
     plt.show()
