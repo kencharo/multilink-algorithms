@@ -131,13 +131,14 @@ if __name__ == "__main__":
     maxval = 1.0*nlink + 0.5
     plt.xlim(-maxval, maxval)
     plt.ylim(-maxval, maxval)
-    def update_draw(event):
+    def update_draw(t):
         global q, qdot
         q, qdot, i_X_o = calc_state(q, qdot)
         pos = fwdkinematics(p, i_X_o)
         line.set_xdata([0]+[pos[i][0, 0] for i in range(nlink)])
         line.set_ydata([0]+[pos[i][1, 0] for i in range(nlink)])
-        fig.canvas.draw()                 # redraw the canvas
+        #if t % 10 == 0:
+        #    plt.savefig("img_%04d.png" % t)
         return line,
 
     ani = animation.FuncAnimation(fig, update_draw, interval=5)

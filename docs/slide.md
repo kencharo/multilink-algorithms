@@ -264,7 +264,7 @@ $$
 \boldsymbol{v}_O
 \end{array}
 \right]
-\times ^*
+\times ^\*
 \left[
 \begin{array}{c}
 \boldsymbol{\tau}_O \\\\
@@ -287,23 +287,23 @@ $$
 * Spatial Vectorの微分
 
 $$
-\frac{d}{dt} \boldsymbol{s} = \lim_{\delta \rightarrow 0} \frac{\boldsymbol{s}\( t+\delta t \) - \boldsymbol{s}\( t \)}{\delta t}
+\frac{d \boldsymbol{s}}{dt} = \lim_{\delta \rightarrow 0} \frac{\boldsymbol{s}\( t+\delta t \) - \boldsymbol{s}\( t \)}{\delta t}
 $$
 
-* 速度$\boldsymbol{v}$で動いている物体上にある固定点のSpatial Vector$\boldsymbol{s}$の微分
+* 速度$\boldsymbol{v}$で動いている物体上にある固定点における速度$\boldsymbol{s}$の微分
 
 $$
-\frac{d}{dt} \boldsymbol{s} = \boldsymbol{v} \times \boldsymbol{s}
+\frac{d \boldsymbol{s}}{dt} = \boldsymbol{v} \times \boldsymbol{s}
 $$
 
 ---
 
 ## 微分
 
-* 動いている座標上の微分
+* 速度$\boldsymbol{v}_A$で動いている座標A上のMotion Vector$\boldsymbol{s}$の微分
 
 $$
-\Bigl[ \frac{d}{dt} \boldsymbol{s} \Bigr]_O = \frac{d}{dt} \boldsymbol{s}_O + \boldsymbol{v}_O \times \boldsymbol{s}_O
+^A \Bigl[ \frac{d \boldsymbol{s}}{dt} \Bigr] = \frac{d ^A \boldsymbol{s}}{dt} + ^A \boldsymbol{v}_A \times ^A \boldsymbol{s}
 $$
 
 ---
@@ -326,10 +326,40 @@ $$
 
 ![inertia](images/inertia.png)
 
-* Spatial inertia tensor
+---
+
+## 剛体の慣性
+
+* 点C回りの慣性テンソル
 
 $$
-\hat{\boldsymbol{I}}_O=
+\boldsymbol{I}_C=
+\left[
+\begin{array}{cc}
+\overline{\boldsymbol{I}}_C & \boldsymbol{0} \\\\
+\boldsymbol{0} & m \boldsymbol{1}
+\end{array}
+\right]
+$$
+
+* 点O回りの慣性テンソル
+
+$$
+\boldsymbol{I}_O=
+\left[
+\begin{array}{cc}
+\boldsymbol{1} & \boldsymbol{c} \times \\\\
+\boldsymbol{0} & \boldsymbol{1}
+\end{array}
+\right]
+\boldsymbol{I}_O
+\left[
+\begin{array}{cc}
+\boldsymbol{1} & \boldsymbol{0} \\\\
+\boldsymbol{c} \times ^T & \boldsymbol{1}
+\end{array}
+\right]
+=
 \left[
 \begin{array}{cc}
 \overline{\boldsymbol{I}}_C+m \boldsymbol{c} \times \boldsymbol{c} \times ^T & m \boldsymbol{c} \times \\\\
@@ -344,7 +374,7 @@ $$
 
 $$
 \boldsymbol{f} = \frac{d}{dt} \( \boldsymbol{Iv} \) =
-\boldsymbol{Ia} + \boldsymbol{v} \times \boldsymbol{Iv}
+\boldsymbol{Ia} + \boldsymbol{v} \times ^\* \boldsymbol{Iv}
 $$
 
 ---
