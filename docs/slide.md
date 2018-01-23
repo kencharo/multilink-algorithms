@@ -232,7 +232,7 @@ $$
 
 ## 外積計算
 
-* $\hat{\boldsymbol{v}}_O$，$\hat{\boldsymbol{m}}_O$をMotion Vector，$\hat{\boldsymbol{f}}_O$をForce Vectorとすると
+* $\hat{\boldsymbol{v}}_O$，$\hat{\boldsymbol{m}}_O$をMotion Vector，$\hat{\boldsymbol{f}}_O$をForce Vectorとして以下のように定義する
 
 $$
 \hat{\boldsymbol{v}}_O \times \hat{\boldsymbol{m}}_O =\left[
@@ -289,16 +289,6 @@ $$
 $$
 \frac{d \boldsymbol{s}}{dt} = \lim_{\delta \rightarrow 0} \frac{\boldsymbol{s}\( t+\delta t \) - \boldsymbol{s}\( t \)}{\delta t}
 $$
-
-* 速度$\boldsymbol{v}$で動いている物体上にある固定点における速度$\boldsymbol{s}$の微分
-
-$$
-\frac{d \boldsymbol{s}}{dt} = \boldsymbol{v} \times \boldsymbol{s}
-$$
-
----
-
-## 微分
 
 * 速度$\boldsymbol{v}_A$で動いている座標A上のMotion Vector$\boldsymbol{s}$の微分
 
@@ -382,3 +372,9 @@ $$
 ## 拘束あり運動
 
 ![constraint](images/constraint.png)
+
+---
+
+## 多リンク動力学
+
+![constraint](images/multilink.png)
