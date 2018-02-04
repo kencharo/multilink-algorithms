@@ -392,15 +392,12 @@ $\boldsymbol{S}$ を拘束される空間への投影行列とすると
 ## 拘束あり運動
 
 * 運動方程式
-
 $$
 \boldsymbol{f} + \boldsymbol{f}_c =
 \boldsymbol{Ia} + \boldsymbol{v} \times ^\* \boldsymbol{Iv} =
 \boldsymbol{Ia}
 $$
-
 * 解法
-
 $$
 \boldsymbol{IS}\dot{\alpha}=\boldsymbol{f} + \boldsymbol{f}_c \\\\
 \boldsymbol{S}^T \boldsymbol{IS}\dot{\alpha}=\boldsymbol{S}^T \boldsymbol{f} \\\\
@@ -413,3 +410,45 @@ $$
 ## 逆動力学
 
 ![constraint](images/multilink.png)
+
+* $\dot{q}_i , \ddot{q}_i , \boldsymbol{s}_i$ : $i$番目の関節速度、加速度、関節軸ベクトル
+* $\boldsymbol{v}_i , \boldsymbol{a}_i$ : $i$番目のリンクの速度、加速度
+* $\boldsymbol{f}_i$ : $i-1$番目のリンクから$i$番目のリンクに伝達される力
+* $\boldsymbol{I}_i$ : $i$番目のリンクの慣性
+* $\tau_i$ : 関節トルク(今回求めたい変数)
+
+---
+
+## 逆動力学
+
+* $i$リンク速度は$i-1$リンク速度と$i$関節角速度の和
+$$
+\boldsymbol{v}\_i = \boldsymbol{v}\_{i-1} + \boldsymbol{s}\_i \dot{q}\_i
+$$
+* 加速度は上記速度の微分
+$$
+\boldsymbol{a}\_i = \boldsymbol{a}\_{i-1} + \dot{\boldsymbol{s}}\_i \dot{q}\_i + \boldsymbol{s}\_i \ddot{q}\_i
+$$
+* 運動方程式
+$$
+\boldsymbol{f}\_i - \boldsymbol{f}\_{i+1} = \boldsymbol{I}\_i \boldsymbol{a}\_i + \boldsymbol{v}\_i \times \boldsymbol{I}\_i \boldsymbol{v}\_i
+$$
+* 有効な関節トルク
+$$
+\tau_i  = \boldsymbol{s}\_i ^T \boldsymbol{f}\_i
+$$
+
+
+---
+
+### 再帰的ニュートン・オイラー法
+
+関節角加速度$\ddot{q}_i$から関節角トルク$\tau_i$を求める計算
+
+$$
+\boldsymbol{v}_0 = \boldsymbol{0}, \boldsymbol{a}_0 = \boldsymbol{0} \\\\
+\boldsymbol{v}\_i = \boldsymbol{v}\_{i-1} + \boldsymbol{s}\_i \dot{q}\_i \\\\
+\boldsymbol{a}\_i = \boldsymbol{a}\_{i-1} + \dot{\boldsymbol{s}}\_i \dot{q}\_i + \boldsymbol{s}\_i \ddot{q}\_i \\\\
+\boldsymbol{f}\_i =  \boldsymbol{f}\_{i+1} + \boldsymbol{I}\_i \boldsymbol{a}\_i + \boldsymbol{v}\_i \times \boldsymbol{I}\_i \boldsymbol{v}\_i \\\\
+\tau_i  = \boldsymbol{s}\_i ^T \boldsymbol{f}\_i
+$$
