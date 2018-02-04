@@ -300,6 +300,8 @@ $$
 
 ## 加速度
 
+![acc](images/acc_rot_body.png)
+
 $$
 \hat{\boldsymbol{a}}_O=
 \left[
@@ -367,14 +369,47 @@ $$
 \boldsymbol{Ia} + \boldsymbol{v} \times ^\* \boldsymbol{Iv}
 $$
 
+* $\boldsymbol{f}$ : 剛体にかかる合力
+* $\boldsymbol{I}$ : 剛体の慣性
+* $\boldsymbol{v}$ : 剛体の速度
+* $\boldsymbol{Iv}$ : 剛体の運動量
+* $\boldsymbol{a}$ : 剛体の加速度
+
 ---
 
 ## 拘束あり運動
 
-![constraint](images/constraint.png)
+<img src="images/constraint.png" width="30%" />
+
+$\boldsymbol{S}$ を拘束される空間への投影行列とすると
+
+* 速度拘束 $\boldsymbol{v}=\boldsymbol{S}\alpha=\boldsymbol{0}$
+* 加速度拘束 $\boldsymbol{a}=\boldsymbol{S}\dot{\alpha}+\dot{\boldsymbol{S}}\dot{\alpha}=\boldsymbol{S}\dot{\alpha}$
+* 力拘束 $\boldsymbol{S}^T \boldsymbol{f}_c=\boldsymbol{0}$
 
 ---
 
-## 多リンク動力学
+## 拘束あり運動
+
+* 運動方程式
+
+$$
+\boldsymbol{f} + \boldsymbol{f}_c =
+\boldsymbol{Ia} + \boldsymbol{v} \times ^\* \boldsymbol{Iv} =
+\boldsymbol{Ia}
+$$
+
+* 解法
+
+$$
+\boldsymbol{IS}\dot{\alpha}=\boldsymbol{f} + \boldsymbol{f}_c \\\\
+\boldsymbol{S}^T \boldsymbol{IS}\dot{\alpha}=\boldsymbol{S}^T \boldsymbol{f} \\\\
+\dot{\alpha}=\bigl( \boldsymbol{S}^T \boldsymbol{IS} \bigr) ^{-1} \boldsymbol{S}^T \boldsymbol{f} \\\\
+\boldsymbol{a}=\underset{見かけの逆慣性行列}{\underline{ \boldsymbol{S} \bigl( \boldsymbol{S}^T \boldsymbol{IS} \bigr) ^{-1} \boldsymbol{S}^T }} \boldsymbol{f}
+$$
+
+---
+
+## 逆動力学
 
 ![constraint](images/multilink.png)
