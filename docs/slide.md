@@ -21,16 +21,13 @@ http://www.springer.com/la/book/9780387743141
 ## Spatial Vectorについて
 
 * Spatial Vectorでは2つの6次元ベクトル空間を考える
-
 $$
 \begin{aligned}
 \boldsymbol{M}^6 &- Motion \ vectors \\\\
 \boldsymbol{F}^6 &- Force \ vectors
 \end{aligned}
 $$
-
 * この2つの空間の内積が仕事量となる
-
 $$
 \begin{aligned}
 \boldsymbol{m} \cdot \boldsymbol{f}=work \\\\
@@ -56,7 +53,6 @@ $$
 * 任意の$\boldsymbol{M}^6$上の基底ベクトル $ \\{ \boldsymbol{d}_1, ..., \boldsymbol{d}_6 \\} $ に対して，
 以下を満足する $\boldsymbol{F}^6$ 上の**双対基底ベクトル** $ \\{ \boldsymbol{e}_1, ..., \boldsymbol{e}_6 \\} $
 が存在する
-
 $$
 \begin{equation}
 \boldsymbol{d}_i \cdot \boldsymbol{d}_j = \left \\{
@@ -67,9 +63,7 @@ $$
 \right.
 \end{equation}
 $$
-
 * 双対基底によるベクトル表現を用いて内積を表現する
-
 $$
 \boldsymbol{m} \cdot \boldsymbol{f} = \underline{m}^T \underline{f}
 $$
@@ -133,10 +127,8 @@ $$
 ## Plucker Coordinates
 
 * 直交座標系において12の基底ベクトルを定義する
-
 ![m-coord](images/plucker_motion.png)
 ![f-coord](images/plucker_force.png)
-
 $$
 \\boldsymbol{d}\_{O\_x},
 \\boldsymbol{d}\_{O\_y},
@@ -145,7 +137,6 @@ $$
 \\boldsymbol{d}\_y,
 \\boldsymbol{d}\_z
 $$
-
 $$
 \\boldsymbol{e}\_x,
 \\boldsymbol{e}\_y,
@@ -162,7 +153,6 @@ $$
 ![transform](images/transforms.png)
 
 * Motion vectorのA座標からB座標への変換
-
 $$
 \begin{eqnarray}
 ^{B} X_A =\left[
@@ -185,7 +175,6 @@ $$
 ## 座標変換
 
 * ここで$\boldsymbol{r} \times$は
-
 $$
 \begin{eqnarray}
 \boldsymbol{r} \times =\left[
@@ -197,7 +186,6 @@ r_z & 0 & -r_x \\\\
 \right]
 \end{eqnarray}
 $$
-
 * Force vectorの変換行列は$\( ^B \boldsymbol{X}_A \)^{-T}$
 
 ---
@@ -285,13 +273,10 @@ $$
 ## 微分
 
 * Spatial Vectorの微分
-
 $$
 \frac{d \boldsymbol{s}}{dt} = \lim_{\delta \rightarrow 0} \frac{\boldsymbol{s}\( t+\delta t \) - \boldsymbol{s}\( t \)}{\delta t}
 $$
-
 * 速度$\boldsymbol{v}_A$で動いている座標A上のMotion Vector$\boldsymbol{s}$の微分
-
 $$
 ^A \Bigl[ \frac{d \boldsymbol{s}}{dt} \Bigr] = \frac{d ^A \boldsymbol{s}}{dt} + ^A \boldsymbol{v}_A \times ^A \boldsymbol{s}
 $$
@@ -323,7 +308,6 @@ $$
 ## 剛体の慣性
 
 * 点C回りの慣性テンソル
-
 $$
 \boldsymbol{I}_C=
 \left[
@@ -333,9 +317,7 @@ $$
 \end{array}
 \right]
 $$
-
 * 点O回りの慣性テンソル
-
 $$
 \boldsymbol{I}_O=
 \left[
@@ -443,8 +425,7 @@ $$
 
 ### 再帰的ニュートン・オイラー法
 
-関節角加速度$\ddot{q}_i$から関節角トルク$\tau_i$を求める計算
-
+* 関節角加速度$\ddot{q}_i$から関節角トルク$\tau_i$を求める計算
 $$
 \boldsymbol{v}_0 = \boldsymbol{0}, \boldsymbol{a}_0 = \boldsymbol{0} \\\\
 \boldsymbol{v}\_i = \boldsymbol{v}\_{i-1} + \boldsymbol{s}\_i \dot{q}\_i \\\\
