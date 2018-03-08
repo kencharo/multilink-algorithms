@@ -36,7 +36,7 @@ def mcross(v1, v2):
     """
     outer product for numpy matrix
     """
-    return np.cross(v1.T, v2.T).reshape((3, 1))
+    return np.cross(v1.T, v2.T).T
 
 def sp_inv(X):
     """
@@ -60,12 +60,12 @@ def sp_cross(spv1, spv2):
     """
     Outer product for spatial vectors
     """
-    return np.r_[mcross(spv1[0:3, 0], spv2[0:3, 0]),
-                 mcross(spv1[0:3, 0], spv2[3:6, 0]) + mcross(spv1[3:6, 0], spv2[0:3, 0])]
+    return np.r_[mcross(spv1[0:3, :], spv2[0:3, :]),
+                 mcross(spv1[0:3, :], spv2[3:6, :]) + mcross(spv1[3:6, :], spv2[0:3, :])]
 
 def sp_dual_cross(spv1, spv2):
-    return np.r_[mcross(spv1[0:3, 0], spv2[0:3, 0]) + mcross(spv1[0:3, 0], spv2[0:3, 0]),
-                 mcross(spv1[0:3, 0], spv2[3:6, 0])]
+    return np.r_[mcross(spv1[0:3, :], spv2[0:3, :]) + mcross(spv1[0:3, :], spv2[0:3, :]),
+                 mcross(spv1[0:3, :], spv2[3:6, :])]
 
 def rodrigues_eq(a, th):
     ahat = hat(a)

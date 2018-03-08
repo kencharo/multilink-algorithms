@@ -100,7 +100,7 @@ if __name__ == "__main__":
     llen = 1.0 * np.ones(nlink+1) # length of links
     lgc = llen/2.0  # center of mass
     jtype = np.zeros(nlink)  # types of joints
-    lmd = np.array([i for i in range(-1, nlink-1)])
+    lmd = [i for i in range(-1, nlink-1)]
     inertia = [np.zeros((6, 6)) for i in range(nlink+1)]
     for i in range(nlink+1):
         inertia[i][1,1] =(mass[i] * llen[i]**2)/12.0
