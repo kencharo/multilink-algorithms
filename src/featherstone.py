@@ -100,7 +100,7 @@ if __name__ == "__main__":
     for i in range(nlink+1):
         inertia[i][1,1] =(mass[i] * llen[i]**2)/12.0
         inertia[i][2,2] =(mass[i] * llen[i]**2)/12.0
-        inertia[i][3:6,3:6] = mass[i] * E3
+        inertia[i][3:6,3:6] = mass[i] * np.mat(E3)
         htmp = hat(np.mat([[lgc[i]], [0.0], [0.0]]))
         inertia[i][0:3,0:3] = inertia[i][0:3,0:3] + htmp*htmp.T
         inertia[i][0:3,3:6] = mass[i] * htmp
