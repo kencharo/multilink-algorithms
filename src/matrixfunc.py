@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import numpy as np
+import cupy as np
 
 X, Y, Z = range(3)
 
@@ -36,25 +36,29 @@ def mcross(v1, v2):
     """
     outer product for numpy matrix
     """
-    return np.cross(v1.T, v2.T).T
+    ans = np.zeros((3, 1))
+    ans[0, 0] = v1[1, 0] * v2[2, 0] - v1[2, 0] * v2[1, 0]
+    ans[1, 0] = v1[2, 0] * v2[0, 0] - v1[0, 0] * v2[2, 0]
+    ans[2, 0] = v1[0, 0] * v2[1, 0] - v1[1, 0] * v2[0, 0]
+    return ans
 
 def sp_inv(X):
     """
     inverse spatial matrix
     """
-    return np.bmat([[X[0:3, 0:3].T, X[0:3, 3:6].T],
-                    [X[3:6, 0:3].T, X[3:6, 3:6].T]])
+    return np.r_[np.c_[X[0:3, 0:3].T, X[0:3, 3:6].T],
+                 np.c_[X[3:6, 0:3].T, X[3:6, 3:6].T]]
 
 def sp_dual(X):
-    return np.bmat([[X[0:3, 0:3], X[3:6, 0:3]],
-                    [X[0:3, 3:6], X[3:6, 3:6]]])
+    return np.r_[np.c_[X[0:3, 0:3], X[3:6, 0:3]],
+                 np.c_[X[0:3, 3:6], X[3:6, 3:6]]]
 
 def sp_dual_inv(X):
     """
     Conjugate inverse of spatial matrix
     """
-    return np.bmat([[X[0:3, 0:3].T, X[3:6, 0:3].T],
-                    [X[0:3, 3:6].T, X[3:6, 3:6].T]])
+    return np.r_[np.c_[X[0:3, 0:3].T, X[3:6, 0:3].T],
+                 np.c_[X[0:3, 3:6].T, X[3:6, 3:6].T]]
 
 def sp_cross(spv1, spv2):
     """

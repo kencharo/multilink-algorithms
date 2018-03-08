@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import numpy as np
+import cupy as np
 from matrixfunc import *
 
 GRAVITY = 9.8
@@ -106,7 +106,7 @@ if __name__ == "__main__":
         inertia[i][1,1] =(mass[i] * llen[i]**2)/12.0
         inertia[i][2,2] =(mass[i] * llen[i]**2)/12.0
         inertia[i][3:6,3:6] = mass[i] * E3
-        htmp = hat(np.array([[lgc[i]], [0.0], [0.0]]))
+        htmp = hat(np.array([[lgc[i]], [0.0], [0.0]], dtype=np.float32))
         inertia[i][0:3,0:3] = inertia[i][0:3,0:3] + np.matmul(htmp, htmp.T)
         inertia[i][0:3,3:6] = mass[i] * htmp
         inertia[i][3:6,0:3] = mass[i] * htmp.T
@@ -117,8 +117,10 @@ if __name__ == "__main__":
 
     fx = np.zeros((nlink, 6, 1))
     tau = np.zeros((nlink, 1, 1))
-    p = np.array([np.zeros((3, 1))] + [np.array([[llen[i]],[0.0],[0.0]]) for i in range(1, nlink+1)])
-    Xt = np.array([np.copy(E6)] + [sp_xlt(p[i]) for i in range(1, nlink+1)])
+    p = np.array([np.zeros((3, 1))] + [np.array([[llen[i]],[0.0],[0.0]], dtype=np.float32) for i in range(1, nlink+1)],
+                 dtype=np.float32)
+    Xt = np.array([np.copy(E6)] + [sp_xlt(p[i]) for i in range(1, nlink+1)],
+                  dtype=np.float32)
     i_X_o  = np.tile(np.copy(E6), (nlink, 1, 1))
     pos = fwdkinematics(p, i_X_o)
 
