@@ -15,6 +15,8 @@ def jcalc(jtype, q, qdot, p):
         vj = S * qdot
         cj = np.mat(np.zeros((6, 1)))
         Xj = sp_rot(make_rot(2, q).T)
+    else:
+        raise NotImplementedError()
     return S, Xj, vj, cj
 
 def articulated_body_algorithm(nlink, q, qdot,
@@ -43,7 +45,7 @@ def articulated_body_algorithm(nlink, q, qdot,
         if lmd[i] != -1:
             i_X_li[i] = Xj * Xt[i]
             i_X_o[i] = i_X_li[i] * i_X_o[lmd[i]]
-            vi[i] = i_X_li[i] * vi[lmd[i]]+vj
+            vi[i] = i_X_li[i] * vi[lmd[i]] + vj
         else:
             i_X_li[i] = Xj * Xt[i]
             i_X_o[i] = i_X_li[i]
@@ -77,7 +79,7 @@ def fwdkinematics(pl, X):
     forward kinematics
     """
     n = len(X)
-    pos = [np.mat(np.zeros((3, 1))) for i in range(n)]
+    pos = [np.mat(np.zeros((3, 1))) for _ in range(n)]
     pos[0] = X[0][0:3, 0:3].T * pl[1];
     for i in range(1, n):
         pos[i] = pos[i-1] + X[i][0:3, 0:3].T * pl[i+1];
