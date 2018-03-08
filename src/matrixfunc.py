@@ -9,12 +9,6 @@ ez = np.array([[0.0], [0.0], [1.0]])
 E3 = np.identity(3) # 3x3 Identity
 E6 = np.identity(6) # 6x6 Identity
 
-def matrixelize(func):
-    def wrapper(*args, **kwargs):
-        return np.matrix(func(*args, **kwargs))
-    return wrapper
-
-@matrixelize
 def hat(x):
     """
     outer product matrix
@@ -28,7 +22,6 @@ def hat(x):
     xhat[2, 1] = x[0, 0]
     return xhat
 
-@matrixelize
 def sphat(x):
     """
     outer product matrix for spatial vector
@@ -39,14 +32,12 @@ def sphat(x):
     xhat[3:6, 3:6] = hat(x[0:3, 0])
     return xhat
 
-@matrixelize
 def mcross(v1, v2):
     """
     outer product for numpy matrix
     """
-    return np.cross(v1.T, v2.T).T
+    return np.cross(v1.T, v2.T).reshape((3, 1))
 
-@matrixelize
 def sp_inv(X):
     """
     inverse spatial matrix
@@ -54,12 +45,10 @@ def sp_inv(X):
     return np.bmat([[X[0:3, 0:3].T, X[0:3, 3:6].T],
                     [X[3:6, 0:3].T, X[3:6, 3:6].T]])
 
-@matrixelize
 def sp_dual(X):
     return np.bmat([[X[0:3, 0:3], X[3:6, 0:3]],
                     [X[0:3, 3:6], X[3:6, 3:6]]])
 
-@matrixelize
 def sp_dual_inv(X):
     """
     Conjugate inverse of spatial matrix
@@ -80,9 +69,8 @@ def sp_dual_cross(spv1, spv2):
 
 def rodrigues_eq(a, th):
     ahat = hat(a)
-    return E + ahat*np.sin(th) + ahat*ahat*(1-np.cos(th))
+    return E + ahat * np.sin(th) + np.matmul(ahat, ahat) * (1-np.cos(th))
 
-@matrixelize
 def make_rot(axis, th):
     rot = np.zeros((3,3))
     cth = np.cos(th)
@@ -107,14 +95,12 @@ def make_rot(axis, th):
         rot[2, 2] = 1.0
     return rot
 
-@matrixelize
 def sp_rot(rot):
     ans = np.zeros((6, 6))
     ans[0:3, 0:3] = rot
     ans[3:6, 3:6] = rot
     return ans
 
-@matrixelize
 def sp_xlt(p):
     ans = np.copy(E6)
     ans[3:6, 0:3] = -hat(p)
