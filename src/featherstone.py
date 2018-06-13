@@ -39,11 +39,11 @@ def articulated_body_algorithm(nlink, q, qdot,
     u = np.zeros((nlink, 1, 1))
     IAi = np.zeros((nlink, 6, 6))
     vi = np.zeros((nlink, 6, 1))
-    q2dot = np.zeros((nlink, 1))
+    q2dot = np.zeros((nlink, 1, 1))
     a = np.zeros((nlink, 6, 1))
     # Phase1
     for i in range(nlink):
-        S[i], Xj, vj, cj = jcalc(jtype[i], q[i,0], qdot[i,0], p[i])
+        S[i], Xj, vj, cj = jcalc(jtype[i], q[i, 0, 0], qdot[i, 0, 0], p[i])
         if lmd[i] != -1:
             i_X_li[i] = np.matmul(Xj, Xt[i])
             i_X_o[i] = np.matmul(i_X_li[i], i_X_o[lmd[i]])
@@ -60,7 +60,7 @@ def articulated_body_algorithm(nlink, q, qdot,
         U[i] = np.matmul(IAi[i], S[i])
         D[i] = np.matmul(S[i].T, U[i])
         Dinv[i] = np.linalg.inv(D[i])
-        u[i] = tau[i] - np.matmul(S[i].T, pAi[i]) #np.matmul(S[i].T, (tau[i] - pAi[i]))
+        u[i] = tau[i] - np.matmul(S[i].T, pAi[i])
         if lmd[i] != -1:
             Ia = IAi[i] - np.matmul(np.matmul(U[i], Dinv[i]), U[i].T)
             pa = pAi[i] + np.matmul(Ia, ci[i]) + np.matmul(np.matmul(U[i], Dinv[i]), u[i])
@@ -111,12 +111,12 @@ if __name__ == "__main__":
         inertia[i][0:3,3:6] = mass[i] * htmp
         inertia[i][3:6,0:3] = mass[i] * htmp.T
 
-    q = np.zeros((nlink, 1))
-    qdot = np.zeros((nlink, 1))
-    q2dot = np.zeros((nlink, 1))
+    q = np.zeros((nlink, 1, 1))
+    qdot = np.zeros((nlink, 1, 1))
+    q2dot = np.zeros((nlink, 1, 1))
 
     fx = np.zeros((nlink, 6, 1))
-    tau = np.zeros((nlink, 1))
+    tau = np.zeros((nlink, 1, 1))
     p = np.array([np.zeros((3, 1))] + [np.array([[llen[i]],[0.0],[0.0]]) for i in range(1, nlink+1)])
     Xt = np.array([np.copy(E6)] + [sp_xlt(p[i]) for i in range(1, nlink+1)])
     i_X_o  = np.tile(np.copy(E6), (nlink, 1, 1))
