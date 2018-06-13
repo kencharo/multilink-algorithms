@@ -27,20 +27,20 @@ def articulated_body_algorithm(nlink, q, qdot,
     """
     Articulated-Body Algorithm
     """
-    S = [np.zeros((6, 1)) for _ in range(nlink)]
-    IAi = [np.zeros((6, 6)) for _ in range(nlink)]
-    pAi = [np.zeros((6, 1)) for _ in range(nlink)]
-    ci  = [np.zeros((6, 1)) for _ in range(nlink)]
-    i_X_li = [np.copy(E6) for _ in range(nlink)]
-    i_X_o  = [np.copy(E6) for _ in range(nlink)]
-    U = [np.zeros((6, 1)) for _ in range(nlink)]
-    D = [np.zeros((1, 1)) for _ in range(nlink)]
-    Dinv = [np.zeros((1, 1)) for _ in range(nlink)]
-    u = [np.zeros((6, 1)) for _ in range(nlink)]
-    IAi = [np.zeros((6, 6)) for _ in range(nlink)]
-    vi = [np.zeros((6, 1)) for _ in range(nlink)]
+    S = np.zeros((nlink, 6, 1))
+    IAi = np.zeros((nlink, 6, 6))
+    pAi = np.zeros((nlink, 6, 1))
+    ci  = np.zeros((nlink, 6, 1))
+    i_X_li = np.tile(np.copy(E6), (nlink, 1, 1))
+    i_X_o  = np.tile(np.copy(E6), (nlink, 1, 1))
+    U = np.zeros((nlink, 6, 1))
+    D = np.zeros((nlink, 1, 1))
+    Dinv = np.zeros((nlink, 1, 1))
+    u = np.zeros((nlink, 1, 1))
+    IAi = np.zeros((nlink, 6, 6))
+    vi = np.zeros((nlink, 6, 1))
     q2dot = np.zeros((nlink, 1))
-    a = [np.zeros((6, 1)) for _ in range(nlink)]
+    a = np.zeros((nlink, 6, 1))
     # Phase1
     for i in range(nlink):
         S[i], Xj, vj, cj = jcalc(jtype[i], q[i,0], qdot[i,0], p[i])
@@ -60,7 +60,7 @@ def articulated_body_algorithm(nlink, q, qdot,
         U[i] = np.matmul(IAi[i], S[i])
         D[i] = np.matmul(S[i].T, U[i])
         Dinv[i] = np.linalg.inv(D[i])
-        u[i] = np.matmul(S[i].T, (tau[i] - pAi[i]))
+        u[i] = tau[i] - np.matmul(S[i].T, pAi[i]) #np.matmul(S[i].T, (tau[i] - pAi[i]))
         if lmd[i] != -1:
             Ia = IAi[i] - np.matmul(np.matmul(U[i], Dinv[i]), U[i].T)
             pa = pAi[i] + np.matmul(Ia, ci[i]) + np.matmul(np.matmul(U[i], Dinv[i]), u[i])
@@ -82,10 +82,10 @@ def fwdkinematics(pl, X):
     forward kinematics
     """
     n = len(X)
-    pos = [np.zeros((3, 1)) for _ in range(n)]
-    pos[0] = np.matmul(X[0][0:3, 0:3].T, pl[1])
+    pos = np.zeros((n, 3, 1))
+    pos[0] = np.matmul(X[0, 0:3, 0:3].T, pl[1])
     for i in range(1, n):
-        pos[i] = pos[i-1] + np.matmul(X[i][0:3, 0:3].T, pl[i+1])
+        pos[i] = pos[i-1] + np.matmul(X[i, 0:3, 0:3].T, pl[i+1])
     return pos
 
 if __name__ == "__main__":
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     lgc = llen/2.0  # center of mass
     jtype = np.zeros(nlink)  # types of joints
     lmd = [i for i in range(-1, nlink-1)]
-    inertia = [np.zeros((6, 6)) for i in range(nlink+1)]
+    inertia = np.zeros((nlink+1, 6, 6))
     for i in range(nlink+1):
         inertia[i][1,1] =(mass[i] * llen[i]**2)/12.0
         inertia[i][2,2] =(mass[i] * llen[i]**2)/12.0
@@ -115,11 +115,11 @@ if __name__ == "__main__":
     qdot = np.zeros((nlink, 1))
     q2dot = np.zeros((nlink, 1))
 
-    fx = [np.zeros((6, 1)) for i in range(nlink)]
-    tau = [np.zeros((6, 1)) for i in range(nlink)]
-    p = [np.zeros((3, 1))] + [np.array([[llen[i]],[0.0],[0.0]]) for i in range(1, nlink+1)]
-    Xt = [np.copy(E6)] + [sp_xlt(p[i]) for i in range(1, nlink+1)]
-    i_X_o  = [np.copy(E6) for i in range(nlink)]
+    fx = np.zeros((nlink, 6, 1))
+    tau = np.zeros((nlink, 1))
+    p = np.array([np.zeros((3, 1))] + [np.array([[llen[i]],[0.0],[0.0]]) for i in range(1, nlink+1)])
+    Xt = np.array([np.copy(E6)] + [sp_xlt(p[i]) for i in range(1, nlink+1)])
+    i_X_o  = np.tile(np.copy(E6), (nlink, 1, 1))
     pos = fwdkinematics(p, i_X_o)
 
     def calc_state(q, qdot):
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     fig = plt.figure()
 
     ax = fig.add_subplot(111, aspect='equal')
-    line, = ax.plot([0]+[pos[i][0, 0] for i in range(nlink)], [0]+[pos[i][1, 0] for i in range(nlink)],'-o')
+    line, = ax.plot([0]+[pos[i, 0, 0] for i in range(nlink)], [0]+[pos[i, 1, 0] for i in range(nlink)],'-o')
     maxval = 1.0*nlink + 0.5
     plt.xlim(-maxval, maxval)
     plt.ylim(-maxval, maxval)
@@ -140,8 +140,8 @@ if __name__ == "__main__":
         global q, qdot
         q, qdot, i_X_o = calc_state(q, qdot)
         pos = fwdkinematics(p, i_X_o)
-        line.set_xdata([0]+[pos[i][0, 0] for i in range(nlink)])
-        line.set_ydata([0]+[pos[i][1, 0] for i in range(nlink)])
+        line.set_xdata([0]+[pos[i, 0, 0] for i in range(nlink)])
+        line.set_ydata([0]+[pos[i, 1, 0] for i in range(nlink)])
         #if t % 10 == 0:
         #    plt.savefig("img_%04d.png" % t)
         return line,
